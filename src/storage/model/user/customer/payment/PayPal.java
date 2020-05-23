@@ -1,4 +1,4 @@
 package storage.model.user.customer.payment;
 
-public class PayPal {
+public class PayPal extends Payment {
 }

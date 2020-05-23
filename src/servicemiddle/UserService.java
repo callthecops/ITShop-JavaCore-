@@ -1,9 +1,12 @@
 package servicemiddle;
 
+import presentation.Display;
 import storage.Dao.UserDao.UserDao;
 import storage.model.user.User;
+import storage.model.user.admin.Admin;
+import storage.model.user.customer.Customer;
 
-import java.util.List;
+import java.io.IOException;
 import java.util.Scanner;
 
 //Sole purposs of this class is to act as an intermediary between the view layer(presentation) and the storage layer
@@ -14,6 +17,7 @@ import java.util.Scanner;
 public class UserService {
     private UserDao userDao;
 
+
     public UserService(UserDao userDao) {
         this.userDao = userDao;
     }
@@ -22,32 +26,13 @@ public class UserService {
         return userDao;
     }
 
-    public void setUserDao(UserDao userDao) {
-        this.userDao = userDao;
-    }
 
 
-    // takes input for the 4 users available from the user
-    public int getUserInput() {
-        int userChoice = 0;
-        boolean test = true;
-        while (test) {
-            Scanner sc = new Scanner(System.in);
-            if (sc.hasNextInt()) {
-                userChoice = Integer.parseInt(sc.nextLine());
-                if (userChoice < 0 || userChoice > 4) {
-                    System.out.println("Please enter the correct number ");
-                } else {
-                    return userChoice;
-                }
-            } else {
-                System.out.println("Please enter a number");
-            }
-        }
-        return -1;
-    }
+
+
 
     //Method that takes the user input of 1,2,3,4 when choosing a user in the starting menu and selects the coresponding user form the list.
+
     public User searchUserById(int userInputNumber) {
         int control = 100;
         int userId = control + userInputNumber;
@@ -59,6 +44,34 @@ public class UserService {
         }
         return user;
     }
+
+
+
+
+    //Selects based on role of the user and calls one of the following 2 methods.Then it takes the user choice and
+    public User redirectByRole(User user) {
+        if (user.getRole().equals(" admin")) {
+            Admin admin = new Admin();
+            admin.setAddress(user.getAddress());
+            admin.setRole(user.getRole());
+            admin.setUserId(user.getUserId());
+            admin.setUserName(user.getUserName());
+            admin.setUserSurName(user.getUserSurName());
+            System.out.println("ADMIN:");
+            return admin;
+        } else {
+            // Redirect to customer user panel
+            Customer customer = new Customer();
+            customer.setAddress(user.getAddress());
+            customer.setRole(user.getRole());
+            customer.setUserId(user.getUserId());
+            customer.setUserName(user.getUserName());
+            customer.setUserSurName(user.getUserSurName());
+            System.out.println("CUSTOMER");
+            return customer;
+        }
+    }
+
 
 
 }

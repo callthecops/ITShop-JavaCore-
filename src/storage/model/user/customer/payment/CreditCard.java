@@ -1,4 +1,4 @@
 package storage.model.user.customer.payment;
 
-public class CreditCard {
+public class CreditCard extends Payment{
 }

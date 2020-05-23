@@ -1,8 +1,9 @@
 package presentation;
 
 import servicemiddle.UserService;
-import storage.Dao.UserDao.UserDao;
 import storage.model.user.User;
+import storage.model.user.admin.Admin;
+import storage.model.user.customer.Customer;
 
 import java.util.List;
 import java.util.Scanner;
@@ -11,6 +12,11 @@ import java.util.Scanner;
 public class Display {
     private UserService userService;
 
+    public Display(UserService userService) {
+        this.userService = userService;
+    }
+
+    //General Screen for all users
     public void displayWelcomeScreen() {
         System.out.println("");
         System.out.print("                                                      !@!@!@! WELCOME TO THE R2D2 COMPUTER ACCESSORIES SHOP !@!@!@!\n\n");
@@ -21,16 +27,43 @@ public class Display {
             System.out.println(u);
         }
 
-        int input =userService.getUserInput();
-        System.out.println(userService.searchUserById(input));
+        int input = retrieveUserInput();
+
+        User user = userService.searchUserById(input);
+        User abc = userService.redirectByRole(user);
+        System.out.println(abc.getClass());
 
     }
 
 
+    // takes input for the 4 users available from the user
+    public int retrieveUserInput() {
+        int userChoice = 0;
+        boolean test = true;
+        while (test) {
+            Scanner sc = new Scanner(System.in);
+            if (sc.hasNextInt()) {
+                userChoice = Integer.parseInt(sc.nextLine());
+                if (userChoice < 0 || userChoice > 4) {
+                    System.out.println("Please enter the correct number ");
+                } else {
+                    return userChoice;
+                }
+            } else {
+                System.out.println("Please enter a number");
+            }
+        }
+        return -1;
+    }
 
 
-    public Display(UserService userService) {
-        this.userService = userService;
+    //Screen for user1 wich is the only admin from the list
+    public static void displayAdminPanel(Admin admin) {
+        System.out.println("ABC");
+    }
+
+    public static void displayCustomerPanel(Customer customer) {
+        System.out.println("QWERTY");
     }
 
 }
