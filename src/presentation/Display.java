@@ -30,8 +30,8 @@ public class Display {
         int input = retrieveUserInput();
 
         User user = userService.searchUserById(input);
-        User abc = userService.redirectByRole(user);
-        System.out.println(abc.getClass());
+        User CustomerOrAdmin = userService.createByRole(user);
+        userService.redirectByRole(CustomerOrAdmin);
 
     }
 
@@ -59,11 +59,11 @@ public class Display {
 
     //Screen for user1 wich is the only admin from the list
     public static void displayAdminPanel(Admin admin) {
-        System.out.println("ABC");
+        System.out.println("Admin Panel");
     }
 
     public static void displayCustomerPanel(Customer customer) {
-        System.out.println("QWERTY");
+        System.out.println("Customer Panel");
     }
 
 }

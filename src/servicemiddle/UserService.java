@@ -27,10 +27,6 @@ public class UserService {
     }
 
 
-
-
-
-
     //Method that takes the user input of 1,2,3,4 when choosing a user in the starting menu and selects the coresponding user form the list.
 
     public User searchUserById(int userInputNumber) {
@@ -47,9 +43,8 @@ public class UserService {
 
 
 
-
     //Selects based on role of the user and calls one of the following 2 methods.Then it takes the user choice and
-    public User redirectByRole(User user) {
+    public User createByRole(User user) {
         if (user.getRole().equals(" admin")) {
             Admin admin = new Admin();
             admin.setAddress(user.getAddress());
@@ -57,7 +52,7 @@ public class UserService {
             admin.setUserId(user.getUserId());
             admin.setUserName(user.getUserName());
             admin.setUserSurName(user.getUserSurName());
-            System.out.println("ADMIN:");
+
             return admin;
         } else {
             // Redirect to customer user panel
@@ -67,11 +62,19 @@ public class UserService {
             customer.setUserId(user.getUserId());
             customer.setUserName(user.getUserName());
             customer.setUserSurName(user.getUserSurName());
-            System.out.println("CUSTOMER");
+
             return customer;
         }
     }
 
+    public void redirectByRole(User user) {
+
+        if (user.getRole().equals(" admin")) {
+            Display.displayAdminPanel((Admin) user);
+        } else {
+            Display.displayCustomerPanel((Customer) user);
+        }
+    }
 
 
 }
