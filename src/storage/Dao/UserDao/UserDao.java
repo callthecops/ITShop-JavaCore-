@@ -17,6 +17,7 @@ import java.util.Scanner;
 public class UserDao implements Dao<User> {
     private List<User> userList ;
 
+
     public UserDao() throws IOException{
         this.userList = getAll(new File("src/UserAccounts.txt"));
     }

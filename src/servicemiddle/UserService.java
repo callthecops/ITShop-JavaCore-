@@ -7,6 +7,7 @@ import storage.model.user.admin.Admin;
 import storage.model.user.customer.Customer;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 
 //Sole purposs of this class is to act as an intermediary between the view layer(presentation) and the storage layer
@@ -15,12 +16,14 @@ import java.util.Scanner;
 //As such when we create a UserService class and pass it a new UserDao argument, the UserService will ne able to access
 //all the user data that the userdao has parsed from the text file and as such also pass it further to the presentation layer.
 public class UserService {
-    private UserDao userDao;
+    private UserDao userDao ;
 
+    public UserService(){}
 
     public UserService(UserDao userDao) {
         this.userDao = userDao;
     }
+
 
     public UserDao getUserDao() {
         return userDao;
@@ -41,9 +44,16 @@ public class UserService {
         return user;
     }
 
-
+    ///////////////////////////////////////////////////////////METHODS USED FOR THE GENERAL VIEW/////////////////////////////////////////////////////////////
 
     //Selects based on role of the user and calls one of the following 2 methods.Then it takes the user choice and
+
+    public List<User> retrieveUsers(){
+        List<User> users = userDao.getUserList();
+        return users;
+    }
+
+
     public User createByRole(User user) {
         if (user.getRole().equals(" admin")) {
             Admin admin = new Admin();
@@ -68,13 +78,23 @@ public class UserService {
     }
 
     public void redirectByRole(User user) {
-
+        Display display = new Display();
         if (user.getRole().equals(" admin")) {
-            Display.displayAdminPanel((Admin) user);
+            display.displayAdminPanel((Admin) user);
         } else {
             Display.displayCustomerPanel((Customer) user);
         }
     }
+///////////////////////////////////////////////////////////METHODS USED FOR THE ADMIN VIEW/////////////////////////////////////////////////////////////
 
+    //Used to redirect admin back to the general view or show him the stock
 
+    public void redirectAdminBackOrToStock(Display display ,int input){
+        if(input==1){
+            System.out.println("View");
+        }else {
+            display.displayWelcomeScreen();
+        }
+
+    }
 }
