@@ -33,7 +33,6 @@ public class Mouse extends Product {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("\n");
         builder.append(this.getBarCode()).append(", ");
         builder.append(this.getProductType()).append(", ");
         builder.append(this.getType()).append(", ");
