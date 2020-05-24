@@ -12,12 +12,18 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ProductDao implements Dao<Product> {
-    List<Product> productList;
+   public List<Product> productList;
 
     public ProductDao() throws IOException {
         this.productList = getAll(new File("src/Stock.txt"));
     }
 
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
+    }
+    public List<Product> getProductList(){
+        return productList;
+    }
 
     @Override
     public List<Product> getAll(File file) throws IOException {
@@ -55,4 +61,5 @@ public class ProductDao implements Dao<Product> {
         }
         return productList;
     }
+
 }

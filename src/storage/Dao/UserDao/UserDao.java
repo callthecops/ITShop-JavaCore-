@@ -27,11 +27,11 @@ public class UserDao implements Dao<User> {
     //parses the text file and returns the list of users wich contains admin and customer objects
     @Override
     public List<User> getAll(File file) throws IOException {
-        Scanner sc = new Scanner(file);
+        Scanner scanner = new Scanner(file);
         List<User> userList = new ArrayList<>();
-        while (sc.hasNext()) {
+        while (scanner.hasNext()) {
             Address address = new Address();
-            String[] users = sc.nextLine().split(",");
+            String[] users = scanner.nextLine().split(",");
             //Parsing txt file and setting userid,usernam,usersurname
             if (users[6].equals("admin")) {
                 Admin admin = new Admin();

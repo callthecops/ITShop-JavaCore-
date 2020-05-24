@@ -29,4 +29,23 @@ public class Keyboard extends Product {
         this.layout = layout;
     }
 
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\n");
+        builder.append(this.getBarCode()).append(", ");
+        builder.append(this.getProductType()).append(", ");
+        builder.append(this.getType()).append(", ");
+        builder.append(this.getBrand()).append(", ");
+        builder.append(this.getColor()).append(", ");
+        builder.append(this.getConnectivity()).append(", ");
+        builder.append(this.getQuantity()).append(", ");
+        builder.append(this.getOriginalPrice()).append(", ");
+        builder.append(this.getRetailPrice()).append(", ");
+        builder.append(this.getLayout());
+        return builder.toString();
+    }
+
+
 }

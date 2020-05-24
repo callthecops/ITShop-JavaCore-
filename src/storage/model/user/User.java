@@ -1,6 +1,14 @@
 package storage.model.user;
-
-import java.util.Scanner;
+// TO ADD
+//enum UserRole {
+//    ADMIN(" admin"),CUSTOMER(" user");
+//
+//    public String userRole;
+//
+//    private UserRole(String userRole){
+//        this.userRole = userRole;
+//    }
+//}
 
 public class User {
     private int userId;
