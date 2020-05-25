@@ -31,4 +31,29 @@ public class ProductService {
         return productDao.getProductList();
     }
 
+    //Retrieves the product by Barcode
+
+    public Product retrieveBarcode(List<Product> products) {
+        System.out.println("Please enter Barcode below:");
+        boolean test = true;
+        while (test) {
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNextInt()) {
+                int barcode = Integer.parseInt(scanner.nextLine());
+                for (Product product : products) {
+                    if (barcode == product.getBarCode()) {
+                        return product;
+                    }
+                }
+                System.out.println("There is no such product, please enter again");
+            } else {
+                System.out.println("Please enter a number");
+            }
+        }
+        return null;
+    }
+
+
+
+
 }

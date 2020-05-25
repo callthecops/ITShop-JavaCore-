@@ -6,6 +6,7 @@ import java.util.List;
 
 public class ShoppingBasket {
     private List<Product> products;
+    private String[] status = {"purchased", "saved", "cancelled"};
 
     public List<Product> getProducts() {
         return products;
@@ -14,4 +15,10 @@ public class ShoppingBasket {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+    public String[] getStatus() {
+        return status;
+    }
+
+
 }

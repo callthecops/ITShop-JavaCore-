@@ -10,8 +10,6 @@ import storage.model.user.User;
 import storage.model.user.admin.Admin;
 import storage.model.user.customer.Customer;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -35,6 +33,10 @@ public class Display {
 
     public ViewModel getViewModel() {
         return viewModel;
+    }
+
+    public ProductService getProductService() {
+        return productService;
     }
 
     ///////////////////////////////////////////////////////////GENERAL VIEWS/////////////////////////////////////////////////////////////
@@ -454,6 +456,87 @@ public class Display {
     //////////////////////////////FIRST CUSTOMER DISPLAY AND INPUT////////////////////////////////
 
     public void displayCustomerPanel(Customer customer) {
-        System.out.println("Customer Panel");
+        System.out.println("Welcome" + customer.getUserName() + "," + customer.getUserSurName() + ".Please make a Selection from the menu by pressing the coresponding key\n");
+        System.out.println("1.Customer Panel\n");
+        System.out.println("2.Back\n");
+
+        int choice = retrieveCustomerInput();
+        router.redirectToWelcomeScreenOrToCustomerPanel(choice);
+
     }
+
+    public int retrieveCustomerInput() {
+        boolean test = true;
+        while (test) {
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNextInt()) {
+                int choice = Integer.parseInt(scanner.nextLine());
+                if (choice < 1 || choice > 2) {
+                    System.out.println("Please enter 1 or 2");
+                } else {
+                    return choice;
+                }
+            } else {
+                System.out.println("Please enter a number");
+            }
+        }
+        return 0;
+    }
+
+    //////////////////////////////SECOND CUSTOMER DISPLAY AND INPUT////////////////////////////////
+
+    public void displayCustomerPanelTwo(Customer customer) {
+        System.out.println("This is your Customer Panel " + customer.getUserName() + "," + customer.getUserSurName());
+        System.out.println("Please make your selection\n");
+        System.out.println("1.Add Products To Basket.\n");
+        System.out.println("2.Basket Options.\n");
+        System.out.println("3.Search product by brand.\n");
+        System.out.println("4.Back.\n");
+
+        int choice = displayCustomerPanelTwoInput();
+        router.multiCustomerRedirect(choice);
+
+    }
+
+    public int displayCustomerPanelTwoInput() {
+        boolean test = true;
+        while (test) {
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNextInt()) {
+                int choice = Integer.parseInt(scanner.nextLine());
+                if (choice < 1 || choice > 4) {
+                    System.out.println("Please enter the correct option");
+                } else {
+                    return choice;
+                }
+            } else {
+                System.out.println("Please enter a number.");
+            }
+        }
+        return 0;
+    }
+
+    //////////////////////////////THIRD CUSTOMER DISPLAY AND INPUT(ADD PRODUCTS TO BASKET)////////////////////////////////
+
+    public void addProductsToBasket(List<Product> products) {
+        System.out.println("This is our Stock.Please enter the Barcode for the product you want to purchase.\n");
+        for (Product product : products) {
+            if (product.getProductType().equals("keyboard")) {
+                Keyboard keyboard = (Keyboard) product;
+                System.out.printf("|Barcode:%s|Type:%s|Product Type:%s|Brand:%s|Color:%s|Connectivity:%s|Layout:%s|Quantity:%s|Price:%s",
+                        keyboard.getBarCode(), keyboard.getProductType(), keyboard.getType(), keyboard.getBrand(), keyboard.getColor(),
+                        keyboard.getConnectivity(), keyboard.getLayout(), keyboard.getQuantity(), keyboard.getRetailPrice() + "\n");
+            } else {
+                Mouse mouse = (Mouse) product;
+                System.out.printf("|Barcode:%s|Type:%s|Product Type:%s|Brand:%s|Color:%s|Connectivity:%s|Nr of Buttons:%s|Quantity:%s|Price:%s",
+                        mouse.getBarCode(), mouse.getProductType(), mouse.getType(), mouse.getBrand(), mouse.getColor(),
+                        mouse.getConnectivity(), mouse.getNrOfButtons(), mouse.getQuantity(), mouse.getRetailPrice() + "\n");
+            }
+        }
+
+        //allowing user to enter the barcode from the above list
+        Product product = productService.retrieveBarcode(products);
+        System.out.println(product);
+    }
+
 }

@@ -1,8 +1,6 @@
 package presentation;
 
 import storage.Dao.ProductDao.ProductDao;
-import storage.Dao.UserDao.UserDao;
-import storage.model.product.Product;
 import storage.model.user.User;
 import storage.model.user.customer.Customer;
 
@@ -62,5 +60,29 @@ public class Router {
 
     //////////////////////////////////////////////////////CUSTOMER REDIRECTS///////////////////////////////////////////////////////////////////
 
+
+    //First redirect - back to welcome screen or to customer panel
+
+    public void redirectToWelcomeScreenOrToCustomerPanel(int userInput) {
+        if (userInput == 1) {
+            display.displayCustomerPanelTwo(display.getViewModel().getCustomer());
+        } else {
+            display.displayWelcomeScreen();
+        }
+    }
+
+    //Second redirect - Add products to basket/Basket Options/Search/Back
+
+    public void multiCustomerRedirect(int input){
+        if(input==1){
+                display.addProductsToBasket(display.getProductService().getProductDao().getProductList());
+        }else if(input==2){
+
+        }else if(input==3){
+
+        }else{
+            display.displayCustomerPanel(display.getViewModel().getCustomer());
+        }
+    }
 
 }

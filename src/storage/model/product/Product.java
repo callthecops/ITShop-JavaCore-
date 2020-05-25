@@ -10,7 +10,7 @@ public class Product implements Comparable<Product> {
     private int quantity;
     private double originalPrice;
     private double retailPrice;
-    private String[] status = {"purchased", "saved", "cancelled"};
+
 
 
 
@@ -84,11 +84,5 @@ public class Product implements Comparable<Product> {
         this.retailPrice = retailPrice;
     }
 
-    public String[] getStatus() {
-        return status;
-    }
 
-    public void setStatus(String[] status) {
-        this.status = status;
-    }
 }
