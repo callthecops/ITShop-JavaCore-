@@ -4,15 +4,17 @@ import storage.Dao.UserDao.Dao;
 import storage.model.product.Keyboard;
 import storage.model.product.Mouse;
 import storage.model.product.Product;
+import storage.model.user.admin.Admin;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 public class ProductDao implements Dao<Product> {
-   public List<Product> productList;
+    public List<Product> productList;
 
     public ProductDao() throws IOException {
         this.productList = getAll(new File("src/Stock.txt"));
@@ -21,7 +23,8 @@ public class ProductDao implements Dao<Product> {
     public void setProductList(List<Product> productList) {
         this.productList = productList;
     }
-    public List<Product> getProductList(){
+
+    public List<Product> getProductList() {
         return productList;
     }
 
@@ -60,6 +63,37 @@ public class ProductDao implements Dao<Product> {
             }
         }
         return productList;
+    }
+
+
+    //Method Wich writes new keyboard to file and adds admin modifications to file
+
+    public void writeKeyToFile(Keyboard keyboard, Admin admin) throws IOException {
+        String keyString = keyboard.toString();
+        String keyAdded = keyString + "|| was added by: " + "|UserName: " + admin.getUserName() + "|User Id:" + admin.getUserId() + "|User Role:" + admin.getRole();
+        FileWriter fileWriter = new FileWriter("src/Stock.txt", true);
+        FileWriter logWriter = new FileWriter("src/AdminModifications.txt", true);
+        fileWriter.write(keyString);
+        logWriter.write(keyAdded);
+        fileWriter.close();
+        logWriter.close();
+        System.out.println("Product has been added to stock");
+    }
+
+
+    //Method wich writes new mouse to file and adds admin modifications to file
+
+    public void writeMouseToFile(Mouse mouse,Admin admin) throws IOException {
+        String mouseString = mouse.toString();
+        String mouseAdded = mouseString + "|| was added by: " + "|UserName: " + admin.getUserName() + "|User Id:" + admin.getUserId() + "|User Role:" + admin.getRole();
+        FileWriter fileWriter3 = new FileWriter("src/Stock.txt", true);
+        FileWriter logWriter2 = new FileWriter("src/AdminModifications.txt", true);
+        fileWriter3.write(mouseString);
+        logWriter2.write(mouseAdded);
+        fileWriter3.close();
+        logWriter2.close();
+        System.out.println("Product has been added to stock");
+
     }
 
 }

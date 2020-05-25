@@ -1,8 +1,12 @@
 package presentation;
 
+import storage.Dao.ProductDao.ProductDao;
+import storage.Dao.UserDao.UserDao;
+import storage.model.product.Product;
 import storage.model.user.User;
 import storage.model.user.customer.Customer;
 
+import java.io.File;
 import java.io.IOException;
 
 public class Router {
@@ -49,6 +53,12 @@ public class Router {
         }
     }
 
+    //Third Redirect
+    public void redirectToStockScreenAfterTheProductHasBeenAdded(ProductDao productDao) throws IOException {
+
+        productDao.setProductList(productDao.getAll((new File("src/Stock.txt"))));
+
+    }
 
     //////////////////////////////////////////////////////CUSTOMER REDIRECTS///////////////////////////////////////////////////////////////////
 

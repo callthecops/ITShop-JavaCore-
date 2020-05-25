@@ -1,1 +1,5 @@
-1111, keyboard, gaming, 111, 123, wired, 13, 12312.0, 1.23123123E8, uk|| was added by: |UserName:  user1|User Id:101|User Role: admin
+
+111, keyboard, gaming, 111, 111, wired, 111, 111.0, 111.0, UK|| was added by: |UserName:  user1|User Id:101|User Role: admin
+111, keyboard, gaming, 111, 111, wired, 111, 111.0, 111.0, UK|| was added by: |UserName:  user1|User Id:101|User Role: admin
+222, mouse, standard, 222, 222, wired, 333, 33.0, 333.0, 12|| was added by: |UserName:  user1|User Id:101|User Role: admin
+321, keyboard, internet, 321, 321, wireless, 321, 321.0, 321.0, US|| was added by: |UserName:  user1|User Id:101|User Role: admin
