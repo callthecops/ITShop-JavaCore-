@@ -9,7 +9,7 @@ import java.io.IOException;
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        Display display = new Display(new UserService(new UserDao()),new ProductService(new ProductDao()));
+        Display display = new Display(new UserService(new UserDao()), new ProductService(new ProductDao()));
 
         display.displayWelcomeScreen();
 

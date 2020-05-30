@@ -1,8 +1,13 @@
 package presentation;
 
+import storage.model.product.Product;
 import storage.model.user.User;
 import storage.model.user.admin.Admin;
 import storage.model.user.customer.Customer;
+import storage.model.user.customer.ShoppingBasket;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ViewModel {
     private Admin admin;
@@ -42,7 +47,9 @@ public class ViewModel {
         if (user.getRole().equals(" admin")) {
             setAdmin((Admin) user);
         } else {
+            ShoppingBasket basket = new ShoppingBasket();
             setCustomer((Customer) user);
+
         }
     }
 }

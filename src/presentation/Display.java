@@ -6,11 +6,15 @@ import storage.Dao.ProductDao.ProductDao;
 import storage.model.product.Keyboard;
 import storage.model.product.Mouse;
 import storage.model.product.Product;
+import storage.model.product.ProductBrandComparator;
 import storage.model.user.User;
 import storage.model.user.admin.Admin;
 import storage.model.user.customer.Customer;
+import storage.model.user.customer.payment.CreditCard;
+import storage.model.user.customer.payment.PayPal;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -490,7 +494,7 @@ public class Display {
         System.out.println("Please make your selection\n");
         System.out.println("1.Add Products To Basket.\n");
         System.out.println("2.Basket Options.\n");
-        System.out.println("3.Search product by brand.\n");
+        System.out.println("3.Display products by brand.\n");
         System.out.println("4.Back.\n");
 
         int choice = displayCustomerPanelTwoInput();
@@ -534,9 +538,252 @@ public class Display {
             }
         }
 
-        //allowing user to enter the barcode from the above list
-        Product product = productService.retrieveBarcode(products);
-        System.out.println(product);
+        //STARTS A CHAIN OF EVENTS SHOWCASED BY THE "XXX IN ORDER "COMMENTS
+        retrieveProductBarcode(products, viewModel.getCustomer());
+    }
+
+    //FIRST IN ORDER:This method retrieves the barcode that was inputed by the user.(COMPLEMENTS IN PRODUCT SERVICE)
+    public void retrieveProductBarcode(List<Product> products, Customer customer) {
+        System.out.println("Please enter Product barcode:");
+        boolean test = true;
+        while (test) {
+            Scanner sc = new Scanner(System.in);
+            if (sc.hasNextInt()) {
+                int barcodeInput = Integer.parseInt(sc.nextLine());
+                test = false;
+                checkIfBarcodeExists(barcodeInput, products, customer);
+            } else {
+                System.out.println("Please enter a number");
+            }
+        }
+    }
+
+    //SECOND IN ORDER:This method checks if barcode exists among the list.If it does it redirect to next method wich asks for quantity
+    public void checkIfBarcodeExists(int barcodeInput, List<Product> products, Customer customer) {
+        boolean doesExist = false;
+        for (Product product : products) {
+            if (barcodeInput == product.getBarCode()) {
+                System.out.println("You have selected:|Barcode: " + product.getBarCode() + "|Type:" + product.getProductType() +
+                        "|Brand: " + product.getBrand() + "|Quantity: " + product.getQuantity() + "|Connectivity: " +
+                        product.getConnectivity() + "|Price: " + product.getRetailPrice());
+                doesExist = true;
+                retrieveCustomerQuantityInput(product, customer, products);
+            }
+        }
+        if (doesExist == false) {
+            System.out.println("The Barcode you have entered does not belong to any product, please enter again..");
+            retrieveProductBarcode(products, customer);
+        }
+    }
+
+
+    //THIRD IN ORDER:This method ask user for quantity of the product that he desires.Also Adds product to basket if
+    //quantity matches the quantity in stock
+    public void retrieveCustomerQuantityInput(Product product, Customer customer, List<Product> products) {
+        System.out.println("Please enter quantity");
+        int barCode;
+        boolean test = true;
+        while (test) {
+            Scanner sc = new Scanner(System.in);
+            if (sc.hasNextInt()) {
+                int quantity = Integer.parseInt(sc.nextLine());
+                if (quantity > product.getQuantity() || quantity <= 0) {
+                    System.out.println("The quantity is incorrect, please enter again.Product quantity is: " + product.getQuantity());
+                } else {
+                    //Adds product to the basket with the quantity the user inputed
+                    productService.addProductToTheBasket(product, quantity, customer);
+                    try {
+                        barCode = product.getBarCode();
+                        //Sets the quantity to the product stock to the remaning quantity after user added some to basket
+                        productService.updateStock(barCode, quantity, product, products);
+                        //SIXTH IN ORDER : rewrites the stock.txt file
+                        productService.getProductDao().writeFileWithUpdatedStock(products);
+                        //GOES BACK TO THE CUSTOMER 1,2,3,4 selection screen
+                        displayCustomerPanelTwo(customer);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            } else {
+                System.out.println("Please enter a number");
+            }
+        }
+    }
+
+    //////////////////////////////FORTH CUSTOMER DISPLAY AND INPUT(BASKET OPTIONS)////////////////////////////////
+
+    public void displayBasketContentsAndShowOptions() {
+        List<Product> products = viewModel.getCustomer().getBasket().getProducts();
+        System.out.println("Your basket contains the following products:\n");
+        for (Product product : products) {
+            if (product.getProductType().equals("keyboard")) {
+                Keyboard keyboard = (Keyboard) product;
+                System.out.printf("|Barcode:%s|Type:%s|Product Type:%s|Brand:%s|Color:%s|Connectivity:%s|Layout:%s|Quantity:%s|Price:%s",
+                        keyboard.getBarCode(), keyboard.getProductType(), keyboard.getType(), keyboard.getBrand(), keyboard.getColor(),
+                        keyboard.getConnectivity(), keyboard.getLayout(), keyboard.getQuantity(), keyboard.getRetailPrice() + "\n");
+
+            } else {
+                Mouse mouse = (Mouse) product;
+                System.out.printf("|Barcode:%s|Type:%s|Product Type:%s|Brand:%s|Color:%s|Connectivity:%s|Nr of Buttons:%s|Quantity:%s|Price:%s",
+                        mouse.getBarCode(), mouse.getProductType(), mouse.getType(), mouse.getBrand(), mouse.getColor(),
+                        mouse.getConnectivity(), mouse.getNrOfButtons(), mouse.getQuantity(), mouse.getRetailPrice() + "\n");
+            }
+        }
+        System.out.println("Please choose one of the following options:\n");
+        System.out.println("1.Buy");
+        System.out.println("2.Save Basket For Later");
+        System.out.println("3.Empty Basket");
+        System.out.println("4.Back");
+        int choice = displayCustomerPanelFourInput();
+        router.basketOptionsRedirect(choice);
+    }
+
+
+    public int displayCustomerPanelFourInput() {
+        boolean test = true;
+        while (test) {
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNextInt()) {
+                int choice = Integer.parseInt(scanner.nextLine());
+                return choice;
+            } else {
+                System.out.println("Please enter a number");
+            }
+        }
+        return 0;
+    }
+
+    //////////////////////EVERYTHING RELATED TO THE BUY PANEL HERE /////////////////////////////////
+
+    public void displayCustomerBuyOptionPanel() {
+        System.out.println("Please choose the option for payment:\n");
+        System.out.println("1.Paypal\n");
+        System.out.println("2.Credit Card\n");
+        int choice = retrieveCustomerBuyOptionInput();
+        router.redirectByPaymentOption(choice);
+    }
+
+    //customer input for first panel
+    public int retrieveCustomerBuyOptionInput() {
+        boolean test = true;
+        while (test) {
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNextInt()) {
+                return Integer.parseInt(scanner.nextLine());
+            } else {
+                System.out.println("Please enter a number");
+            }
+        }
+        return 0;
+    }
+
+    //panel representing paypal option and input
+
+    public void displayBuyOptionPaypalPanel() {
+        System.out.println("You have choosen Paypal to pay for your products,");
+        System.out.println("please enter your Paypal email in order to finalize the transaction.\n");
+        //Calling the service to execute buy and clear basket
+        //productService.buyWithPaypal(getViewModel().getCustomer(), displayBuyOptionPaypalPanelInput());
+        PayPal payPal = displayBuyOptionPaypalPanelInput();
+        viewModel.getCustomer().setPayment(payPal);
+        productService.buyWithPaypalOrCreditCard(viewModel.getCustomer());
+        displayCustomerPanelTwo(getViewModel().getCustomer());
+    }
+
+    public PayPal displayBuyOptionPaypalPanelInput() {
+        Scanner scanner = new Scanner(System.in);
+        String email = scanner.nextLine();
+        PayPal payPal = new PayPal();
+        payPal.seteMail(email);
+        return payPal;
+    }
+
+
+    //panel representing creditcard option and input
+    public void displayBuyOptionCreditCardPanel() {
+        System.out.println("You have choosen Credit Card to pay for your products,");
+        System.out.println("please enter your Credit Card number followed by the Security code\n");
+        long cardNumber = retrieveCustomerCardNumber();
+        short securityNumber = retrieveCustomerSecurityNumber();
+        CreditCard creditCard = new CreditCard();
+        creditCard.setCardNumber(cardNumber);
+        creditCard.setSecurityCode(securityNumber);
+        viewModel.getCustomer().setPayment(creditCard);
+        productService.buyWithPaypalOrCreditCard(viewModel.getCustomer());
+        displayCustomerPanelTwo(getViewModel().getCustomer());
+    }
+
+    public long retrieveCustomerCardNumber() {
+        System.out.println("Please enter card number..");
+        boolean test = true;
+        while (test) {
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNextInt()) {
+                return Integer.parseInt(scanner.nextLine());
+            } else {
+                System.out.println("Please enter number");
+            }
+        }
+        return 0;
+    }
+
+    public short retrieveCustomerSecurityNumber() {
+        System.out.println("Please enter security number..");
+        boolean test = true;
+        while (test) {
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNextInt()) {
+                return Short.parseShort(scanner.nextLine());
+            } else {
+                System.out.println("Please enter a number");
+            }
+        }
+        return 0;
+    }
+
+    //////////////////////////////FIFTH CUSTOMER DISPLAY AND INPUT(SORT BY BRAND)////////////////////////////////
+
+    public void displayCustomerSortByBrandPanel() {
+        System.out.println("All the products sorted by brand:\n");
+        List<Product> products = productService.getProductDao().getProductList();
+        Collections.sort(products, new ProductBrandComparator());
+        for (Product prod : products) {
+            if (prod.getProductType().equals("keyboard")) {
+                Keyboard keyboard = (Keyboard) prod;
+                System.out.printf("|Barcode:%s|Type:%s|Product Type:%s|Brand:%s|Color:%s|Connectivity:%s|Layout:%s|Quantity:%s|Price:%s",
+                        keyboard.getBarCode(), keyboard.getProductType(), keyboard.getType(), keyboard.getBrand(), keyboard.getColor(),
+                        keyboard.getConnectivity(), keyboard.getLayout(), keyboard.getQuantity(), keyboard.getRetailPrice() + "\n");
+
+            } else {
+                Mouse mouse = (Mouse) prod;
+                System.out.printf("|Barcode:%s|Type:%s|Product Type:%s|Brand:%s|Color:%s|Connectivity:%s|Nr of Buttons:%s|Quantity:%s|Price:%s",
+                        mouse.getBarCode(), mouse.getProductType(), mouse.getType(), mouse.getBrand(), mouse.getColor(),
+                        mouse.getConnectivity(), mouse.getNrOfButtons(), mouse.getQuantity(), mouse.getRetailPrice() + "\n");
+            }
+        }
+        System.out.println("1.Back");
+        int choice = displayCustomerSortByBrandPanelInput();
+        router.redirectFromBrandDisplayToCustomerPanelTwo();
+    }
+
+    public int displayCustomerSortByBrandPanelInput() {
+        boolean test = true;
+        while (test) {
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNextInt()) {
+                int choice = Integer.parseInt(scanner.nextLine());
+                if (choice == 1) {
+                    return choice;
+                } else {
+                    System.out.println("Please enter 1");
+                }
+            } else {
+                System.out.println("Please enter a number");
+            }
+        }
+        return 0;
     }
 
 }
+
+

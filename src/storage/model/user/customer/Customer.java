@@ -4,7 +4,7 @@ import storage.model.user.User;
 import storage.model.user.customer.payment.Payment;
 
 public class Customer extends User {
-    private ShoppingBasket basket;
+    private ShoppingBasket basket = new ShoppingBasket();
     private Payment payment;
 
     public ShoppingBasket getBasket() {

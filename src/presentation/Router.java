@@ -1,5 +1,6 @@
 package presentation;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import storage.Dao.ProductDao.ProductDao;
 import storage.model.user.User;
 import storage.model.user.customer.Customer;
@@ -28,17 +29,21 @@ public class Router {
     //////////////////////////////////////////////////////ADMIN REDIRECTS///////////////////////////////////////////////////////////////////
 
     //First Redirect
-
     public void redirectToWelcomeScreenOrToStock(int userInput) {
         if (userInput == 1) {
             display.displayProductsPanel();
         } else {
+            try {
+                // DOES NOT EMPTY BASKET BEFORE TURNING TO USER SELECTION SCREEN->> NEED TO RECHECK WHY
+                display.getProductService().emptyCustomerBasket(display.getViewModel().getCustomer());
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
             display.displayWelcomeScreen();
         }
     }
 
     //Second Redirect
-
     public void redirectToWelcomeOrToAddingStock(int userInput) {
         if (userInput == 1) {
             try {
@@ -62,7 +67,6 @@ public class Router {
 
 
     //First redirect - back to welcome screen or to customer panel
-
     public void redirectToWelcomeScreenOrToCustomerPanel(int userInput) {
         if (userInput == 1) {
             display.displayCustomerPanelTwo(display.getViewModel().getCustomer());
@@ -72,17 +76,61 @@ public class Router {
     }
 
     //Second redirect - Add products to basket/Basket Options/Search/Back
-
-    public void multiCustomerRedirect(int input){
-        if(input==1){
-                display.addProductsToBasket(display.getProductService().getProductDao().getProductList());
-        }else if(input==2){
-
-        }else if(input==3){
-
-        }else{
+    public void multiCustomerRedirect(int input) {
+        if (input == 1) {
+            display.addProductsToBasket(display.getProductService().getProductDao().getProductList());
+        } else if (input == 2) {
+            if (display.getViewModel().getCustomer().getBasket().getProducts().isEmpty()) {
+                System.out.println("Your basket is empty, you have to add items first");
+                display.displayCustomerPanelTwo(display.getViewModel().getCustomer());
+            }
+            display.displayBasketContentsAndShowOptions();
+        } else if (input == 3) {
+            //Displays products sorted by brand
+            display.displayCustomerSortByBrandPanel();
+        } else {
             display.displayCustomerPanel(display.getViewModel().getCustomer());
         }
     }
 
+    //Basket Options redirects
+    public void basketOptionsRedirect(int choice) {
+        if (choice == 1) {
+            display.displayCustomerBuyOptionPanel();
+        } else if (choice == 2) {
+
+            //SAVES BASKET TO TEXT
+            display.getProductService().saveBasketForLater(display.getViewModel().getCustomer().getBasket(), display.getViewModel().getCustomer());
+            System.out.println("Your basket has been saved for later");
+            display.displayCustomerPanelTwo(display.getViewModel().getCustomer());
+
+        } else if (choice == 3) {
+            //EMPTIES THE BASKET AND RESTORES STOCK
+            try {
+                display.getProductService().emptyCustomerBasket(display.getViewModel().getCustomer());
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+            System.out.println("Basket has been emptied");
+            display.displayCustomerPanelTwo(display.getViewModel().getCustomer());
+        } else {
+            //BACK TO PANEL
+            display.displayCustomerPanelTwo(display.getViewModel().getCustomer());
+        }
+    }
+
+    //redirects from single input window - sorted by brand products
+    public void redirectFromBrandDisplayToCustomerPanelTwo() {
+        display.displayCustomerPanelTwo(display.getViewModel().getCustomer());
+    }
+
+    //redirects based on the choice that the customer made regarding the payment option
+    //this method is called once the customer has selected the payment option(paypal or creditcard)
+    public void redirectByPaymentOption(int choice) {
+        if (choice == 1) {
+            display.displayBuyOptionPaypalPanel();
+        } else {
+            display.displayBuyOptionCreditCardPanel();
+        }
+    }
 }

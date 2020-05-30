@@ -13,6 +13,12 @@ public class Keyboard extends Product {
         this.layout = layout;
     }
 
+    public Keyboard(int barCode, String productType, String brand, String color, String connectivity, int quantity, double originalPrice, double retailPrice, String type, String layout) {
+        super(barCode, productType, brand, color, connectivity, quantity, originalPrice, retailPrice);
+        this.type = type;
+        this.layout = layout;
+    }
+
     public String getType() {
         return type;
     }
@@ -33,7 +39,6 @@ public class Keyboard extends Product {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("\n");
         builder.append(this.getBarCode()).append(", ");
         builder.append(this.getProductType()).append(", ");
         builder.append(this.getType()).append(", ");
@@ -44,6 +49,7 @@ public class Keyboard extends Product {
         builder.append(this.getOriginalPrice()).append(", ");
         builder.append(this.getRetailPrice()).append(", ");
         builder.append(this.getLayout());
+        builder.append("\n");
         return builder.toString();
     }
 

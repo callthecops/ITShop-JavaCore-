@@ -5,16 +5,18 @@ import storage.model.product.Keyboard;
 import storage.model.product.Mouse;
 import storage.model.product.Product;
 import storage.model.user.admin.Admin;
+import storage.model.user.customer.Customer;
+import storage.model.user.customer.ShoppingBasket;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class ProductDao implements Dao<Product> {
-    public List<Product> productList;
+    private List<Product> productList;
 
     public ProductDao() throws IOException {
         this.productList = getAll(new File("src/Stock.txt"));
@@ -33,7 +35,8 @@ public class ProductDao implements Dao<Product> {
         Scanner sc = new Scanner(file);
         List<Product> productList = new ArrayList<>();
         while (sc.hasNext()) {
-            String[] products = sc.nextLine().replace(" ", "").split(",");
+            String[] products = sc.nextLine().replace(" ",
+                    "").split(",");
             if (products[1].equals("mouse")) {
                 Mouse mouse = new Mouse();
                 mouse.setBarCode(Integer.parseInt(products[0]));
@@ -65,7 +68,6 @@ public class ProductDao implements Dao<Product> {
         return productList;
     }
 
-
     //Method Wich writes new keyboard to file and adds admin modifications to file
 
     public void writeKeyToFile(Keyboard keyboard, Admin admin) throws IOException {
@@ -82,8 +84,7 @@ public class ProductDao implements Dao<Product> {
 
 
     //Method wich writes new mouse to file and adds admin modifications to file
-
-    public void writeMouseToFile(Mouse mouse,Admin admin) throws IOException {
+    public void writeMouseToFile(Mouse mouse, Admin admin) throws IOException {
         String mouseString = mouse.toString();
         String mouseAdded = mouseString + "|| was added by: " + "|UserName: " + admin.getUserName() + "|User Id:" + admin.getUserId() + "|User Role:" + admin.getRole();
         FileWriter fileWriter3 = new FileWriter("src/Stock.txt", true);
@@ -93,7 +94,66 @@ public class ProductDao implements Dao<Product> {
         fileWriter3.close();
         logWriter2.close();
         System.out.println("Product has been added to stock");
-
     }
 
+    //This method writes the stock file with the new modifications that where made by the customer
+    public void writeFileWithUpdatedStock(List<Product> products) throws IOException {
+        FileWriter fileWriter = new FileWriter(new File("src/Stock.txt"));
+        for (Product p : products) {
+            fileWriter.write(p.toString());
+        }
+        fileWriter.close();
+    }
+
+    //This method writes the BasketContent of the user and saves it to a text file
+
+    public void writeBasketContentsToText(ShoppingBasket shoppingBasket, Customer customer) throws IOException {
+        FileWriter fileWriter = new FileWriter(new File("src/ActivityLog.txt"), true);
+        fileWriter.write("***********LOG FILE**********\n");
+
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String formatedDate = date.format(formatter);
+
+        for (Product product : shoppingBasket.getProducts()) {
+            fileWriter.write("|User Id: " + customer.getUserId() + "|PostCode: " + customer.getAddress().getPostCode() + "|Product Barcode: " +
+                    product.getBarCode() + "|Price: " + product.getRetailPrice() + "|Quantity: " + product.getQuantity() +
+                    "|Status: " + shoppingBasket.getStatus()[1] + "|Date: " + formatedDate + "\n");
+        }
+        fileWriter.close();
+    }
+
+    public void writeBasketContentsToTextAfterEmptyOption(ShoppingBasket shoppingBasket, Customer customer) throws IOException {
+        FileWriter fileWriter = new FileWriter(new File("src/ActivityLog.txt"), true);
+        fileWriter.write("***********LOG FILE**********\n");
+
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String formatedDate = date.format(formatter);
+
+        for (Product product : shoppingBasket.getProducts()) {
+            fileWriter.write("|User Id: " + customer.getUserId() + "|PostCode: " + customer.getAddress().getPostCode() + "|Product Barcode: " +
+                    product.getBarCode() + "|Price: " + product.getRetailPrice() + "|Quantity: " + product.getQuantity() +
+                    "|Status: " + shoppingBasket.getStatus()[2] + "|Date: " + formatedDate + "\n");
+        }
+        fileWriter.close();
+    }
+
+
+    //THIS METHOD IS USED TO WRITE THE CONTENTS OF THE BASKET TO TEXT WITH STATUS PURCHASED
+    public void writeBasketContentsToTextAfterPaying(Customer customer) throws IOException {
+        FileWriter fileWriter = new FileWriter(new File("src/ActivityLog.txt"), true);
+        fileWriter.write("***********LOG FILE**********\n");
+
+        LocalDateTime date = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        String formatedDate = date.format(formatter);
+
+        for (Product product : customer.getBasket().getProducts()) {
+            fileWriter.write("|User Id: " + customer.getUserId() + "|PostCode: " + customer.getAddress().getPostCode() + "|Product Barcode: " +
+                    product.getBarCode() + "|Price: " + product.getRetailPrice() + "|Quantity: " + product.getQuantity() +
+                    "|Status: " + customer.getBasket().getStatus()[0] + "|Date: " + formatedDate + "\n");
+        }
+        fileWriter.close();
+    }
 }

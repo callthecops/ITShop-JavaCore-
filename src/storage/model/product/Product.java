@@ -12,12 +12,39 @@ public class Product implements Comparable<Product> {
     private double retailPrice;
 
 
+    public Product(int barCode, String productType, String brand, String color, String connectivity, int quantity, double originalPrice, double retailPrice) {
+        this.barCode = barCode;
+        this.productType = productType;
+        this.brand = brand;
+        this.color = color;
+        this.connectivity = connectivity;
+        this.quantity = quantity;
+        this.originalPrice = originalPrice;
+        this.retailPrice = retailPrice;
+    }
 
+    public Product() {
+    }
 
     @Override
     public int compareTo(Product product) {
         return this.quantity - product.quantity;
+    }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        return barCode == product.barCode;
+    }
+
+    @Override
+    public int hashCode() {
+        return barCode;
     }
 
     public int getBarCode() {
@@ -83,6 +110,5 @@ public class Product implements Comparable<Product> {
     public void setRetailPrice(double retailPrice) {
         this.retailPrice = retailPrice;
     }
-
 
 }

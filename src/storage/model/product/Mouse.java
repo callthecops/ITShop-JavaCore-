@@ -14,6 +14,12 @@ public class Mouse extends Product {
         this.nrOfButtons = nrOfButtons;
     }
 
+    public Mouse(int barCode, String productType, String brand, String color, String connectivity, int quantity, double originalPrice, double retailPrice, String type, int nrOfButtons) {
+        super(barCode, productType, brand, color, connectivity, quantity, originalPrice, retailPrice);
+        this.type = type;
+        this.nrOfButtons = nrOfButtons;
+    }
+
     public String getType() {
         return type;
     }
@@ -33,7 +39,6 @@ public class Mouse extends Product {
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        builder.append("\n");
         builder.append(this.getBarCode()).append(", ");
         builder.append(this.getProductType()).append(", ");
         builder.append(this.getType()).append(", ");
@@ -44,6 +49,7 @@ public class Mouse extends Product {
         builder.append(this.getOriginalPrice()).append(", ");
         builder.append(this.getRetailPrice()).append(", ");
         builder.append(this.getNrOfButtons());
+        builder.append("\n");
         return builder.toString();
     }
 
