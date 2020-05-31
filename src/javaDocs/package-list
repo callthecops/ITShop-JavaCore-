@@ -1,0 +1,10 @@
+
+presentation
+servicemiddle
+storage.Dao.ProductDao
+storage.Dao.UserDao
+storage.model.product
+storage.model.user
+storage.model.user.admin
+storage.model.user.customer
+storage.model.user.customer.payment

@@ -1,0 +1,14 @@
+***********LOG FILE**********
+|User Id: 102|PostCode:  E20 3BS|Product Barcode: 238800|Price: 30.0|Quantity: 1|Status: purchased|Date: 30-05-2020 19:30
+|User Id: 102|PostCode:  E20 3BS|Product Barcode: 235066|Price: 60.0|Quantity: 1|Status: purchased|Date: 30-05-2020 19:30
+***********LOG FILE**********
+|User Id: 102|PostCode:  E20 3BS|Product Barcode: 238800|Price: 30.0|Quantity: 1|Status: purchased|Date: 30-05-2020 19:31
+***********LOG FILE**********
+|User Id: 104|PostCode:  PA3 2SW|Product Barcode: 123|Price: 123.0|Quantity: 6|Status: saved|Date: 30-05-2020 19:33
+***********LOG FILE**********
+|User Id: 104|PostCode:  PA3 2SW|Product Barcode: 123|Price: 123.0|Quantity: 24|Status: cancelled|Date: 30-05-2020 19:33
+***********LOG FILE**********
+|User Id: 104|PostCode:  PA3 2SW|Product Barcode: 123|Price: 123.0|Quantity: 1|Status: purchased|Date: 30-05-2020 19:33
+***********LOG FILE**********
+|User Id: 102|PostCode:  E20 3BS|Product Barcode: 235066|Price: 60.0|Quantity: 1|Status: cancelled|Date: 31-05-2020 13:29
+|User Id: 102|PostCode:  E20 3BS|Product Barcode: 238800|Price: 30.0|Quantity: 1|Status: cancelled|Date: 31-05-2020 13:29
