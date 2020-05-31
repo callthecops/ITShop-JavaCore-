@@ -1,5 +1,8 @@
 package storage.model.product;
 
+/** Class parent of Keyboard and Mouse class
+ * @author Tudor
+ */
 public class Product implements Comparable<Product> {
 
     private int barCode;

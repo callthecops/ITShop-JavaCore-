@@ -1,13 +1,15 @@
 package presentation;
 
-import storage.model.product.Product;
 import storage.model.user.User;
 import storage.model.user.admin.Admin;
 import storage.model.user.customer.Customer;
 import storage.model.user.customer.ShoppingBasket;
 
-import java.util.ArrayList;
-import java.util.List;
+/**
+ * The purpose of this class is to enable easy access to a selected user.Once a user is selected from the inputed list
+ * we can easely access it in Display ,Service and Router with this class in order to perform operations on it.
+ * @author Tudor
+ */
 
 public class ViewModel {
     private Admin admin;

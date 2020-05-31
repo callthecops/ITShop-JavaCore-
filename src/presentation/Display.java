@@ -14,10 +14,20 @@ import storage.model.user.customer.payment.CreditCard;
 import storage.model.user.customer.payment.PayPal;
 
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+
+/**I should have splitted the display class in 3 sepparate classes GeneralDisplay, AdminDisplay and CustomerDisplay but
+ * i figured this out only after 70% of my program was already done.That way it would have been not so long.Not modifying it
+ * would take to much time with no actual benefit for the application itself.
+ *
+ * The class sole purpose is to function as a view for the application.A router is also called wich makes the class
+ * completely decoupled from the dao and more or less decoupled from the service.
+ * @author Tudor
+ */
+
+
 
 //Is calling the service layer when it needs to access data from the storage.
 public class Display {

@@ -10,6 +10,10 @@ package storage.model.user;
 //    }
 //}
 
+/** Parent Class of Customer and Admin
+ * @author Tudor
+ */
+
 public class User {
     private int userId;
     private String userName;

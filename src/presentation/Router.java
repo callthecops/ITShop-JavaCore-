@@ -1,12 +1,16 @@
 package presentation;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import storage.Dao.ProductDao.ProductDao;
 import storage.model.user.User;
 import storage.model.user.customer.Customer;
 
 import java.io.File;
 import java.io.IOException;
+
+/**Router class is used along with display to switch screens.
+ * @author Tudor
+ */
+
 
 public class Router {
     private final Display display;
@@ -33,12 +37,6 @@ public class Router {
         if (userInput == 1) {
             display.displayProductsPanel();
         } else {
-            try {
-                // DOES NOT EMPTY BASKET BEFORE TURNING TO USER SELECTION SCREEN->> NEED TO RECHECK WHY
-                display.getProductService().emptyCustomerBasket(display.getViewModel().getCustomer());
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
             display.displayWelcomeScreen();
         }
     }
@@ -71,6 +69,14 @@ public class Router {
         if (userInput == 1) {
             display.displayCustomerPanelTwo(display.getViewModel().getCustomer());
         } else {
+            //when customer returns to user selection screen, this method auto emtpies basket and readds items to stock
+            try {
+
+                display.getProductService().emptyCustomerBasket(display.getViewModel().getCustomer());
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            //then it redirects to user selection screen
             display.displayWelcomeScreen();
         }
     }

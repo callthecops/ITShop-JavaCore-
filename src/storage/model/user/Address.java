@@ -1,5 +1,8 @@
 package storage.model.user;
 
+/** Acts as a field for the Customer class.
+ * @author Tudor
+ */
 public class Address {
     private int houseNr;
     private String postCode;

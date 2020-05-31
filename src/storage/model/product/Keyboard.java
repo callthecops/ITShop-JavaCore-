@@ -1,5 +1,9 @@
 package storage.model.product;
 
+
+/** Class representing one of the products the store sells.
+ * @author Tudor
+ */
 public class Keyboard extends Product {
     private String type;
     private String layout;

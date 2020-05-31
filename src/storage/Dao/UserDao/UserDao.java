@@ -14,6 +14,10 @@ import java.util.Scanner;
 
 //This class implements the Dao method.It also parses and assigns at initialisation time a list of users.We are doing this so we have all the user data
 //to use in other classes by using the UserDao as a instance variable.
+
+/** Same as ProductDao only for Users.
+ * @author Tudor
+ */
 public class UserDao implements Dao<User> {
     private List<User> userList ;
 

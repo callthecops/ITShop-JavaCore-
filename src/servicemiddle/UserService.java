@@ -13,6 +13,11 @@ import java.util.List;
 //the class wich we will use in the controller so that this class is initialized with all the contents of the other class.
 //As such when we create a UserService class and pass it a new UserDao argument, the UserService will ne able to access
 //all the user data that the userdao has parsed from the text file and as such also pass it further to the presentation layer.
+
+
+/**Same as ProductService only for Users.
+ * @author Tudor
+ */
 public class UserService {
     private UserDao userDao ;
 

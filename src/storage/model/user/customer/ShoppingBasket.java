@@ -4,7 +4,9 @@ import storage.model.product.Product;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/** Class representing a customer shoppingbasket
+ * @author Tudor
+ */
 public class ShoppingBasket {
     private List<Product> products = new ArrayList<>();
     private String[] status = {"purchased", "saved", "cancelled"};

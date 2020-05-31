@@ -15,6 +15,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+
+/**A data access object class used for parsing and writing products to a txt file.
+ * @author Tudor
+ */
 public class ProductDao implements Dao<Product> {
     private List<Product> productList;
 

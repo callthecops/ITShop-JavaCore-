@@ -1,5 +1,7 @@
 package storage.model.product;
-
+/** Class representing one of the products the store sells.
+ * @author Tudor
+ */
 public class Mouse extends Product {
     private String type;
     private int nrOfButtons;
