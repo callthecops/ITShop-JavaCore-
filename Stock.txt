@@ -1,0 +1,16 @@
+123, keyboard, gaming, 123, 123, wired, 116, 123.0, 123.0, UK
+124455, keyboard, standard, Advent, white, wired, 10, 3.5, 5.99, UK
+124566, mouse, standard, Advent, grey, wired, 13, 2.5, 4.99, 2
+237700, mouse, gaming, Anker, black, wired, 1, 8.0, 11.99, 7
+223044, mouse, gaming, Anker, blue, wired, 3, 16.0, 18.5, 10
+234555, keyboard, standard, Apple, white, wireless, 4, 75.5, 85.5, US
+236677, mouse, standard, Asus, blue, wireless, 8, 10.0, 16.99, 5
+321, keyboard, gaming, Asus, Blue, wired, 10, 18.2, 42.0, UK
+123456, keyboard, gaming, Corsair, black, wired, 2, 30.0, 39.99, UK
+221101, mouse, standard, Logitech, black, wired, 3, 3.0, 6.99, 3
+125567, keyboard, internet, Logitech, black, wireless, 4, 25.99, 30.0, US
+237799, mouse, standard, Logitech, grey, wireless, 13, 7.0, 8.0, 2
+237788, keyboard, standard, Logitech, grey, wired, 14, 6.5, 8.99, UK
+112233, mouse, gaming, Logitech, black, wireless, 15, 7.5, 9.5, 3
+238800, keyboard, internet, Microsoft, black, wired, 3, 26.5, 30.0, US
+666, keyboard, gaming, Sapphire, Red, wired, 653, 666.0, 999.0, us
