@@ -12,7 +12,9 @@ import storage.model.user.customer.payment.PayPal;
 import java.io.IOException;
 import java.util.List;
 
-/** Basic service class used as an intermediary between the Display (View) and the daos classes.
+/**
+ * Basic service class used as an intermediary between the Display (View) and the daos classes.
+ *
  * @author Tudor
  */
 
@@ -142,7 +144,7 @@ public class ProductService {
         List<Product> basketProducts = customer.getBasket().getProducts();
         double totalToPay = 0;
         for (Product product : basketProducts) {
-            totalToPay += product.getRetailPrice();
+            totalToPay += product.getRetailPrice() * product.getQuantity();
         }
         if (customer.getPayment() instanceof PayPal) {
             PayPal payPal = (PayPal) customer.getPayment();

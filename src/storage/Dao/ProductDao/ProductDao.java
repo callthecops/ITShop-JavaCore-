@@ -23,7 +23,7 @@ public class ProductDao implements Dao<Product> {
     private List<Product> productList;
 
     public ProductDao() throws IOException {
-        this.productList = getAll(new File("src/Stock.txt"));
+        this.productList = getAll(new File("C:/Users/Tudor/Desktop/Proiecte/Portofoliu/ITShop-JavaCore-/Stock.txt"));
     }
 
     public void setProductList(List<Product> productList) {
@@ -77,8 +77,8 @@ public class ProductDao implements Dao<Product> {
     public void writeKeyToFile(Keyboard keyboard, Admin admin) throws IOException {
         String keyString = keyboard.toString();
         String keyAdded = keyString + "|| was added by: " + "|UserName: " + admin.getUserName() + "|User Id:" + admin.getUserId() + "|User Role:" + admin.getRole();
-        FileWriter fileWriter = new FileWriter("src/Stock.txt", true);
-        FileWriter logWriter = new FileWriter("src/AdminModifications.txt", true);
+        FileWriter fileWriter = new FileWriter("C:/Users/Tudor/Desktop/Proiecte/Portofoliu/ITShop-JavaCore-/Stock.txt", true);
+        FileWriter logWriter = new FileWriter("C:/Users/Tudor/Desktop/Proiecte/Portofoliu/ITShop-JavaCore-/AdminModifications.txt", true);
         fileWriter.write(keyString);
         logWriter.write(keyAdded);
         fileWriter.close();
@@ -91,8 +91,8 @@ public class ProductDao implements Dao<Product> {
     public void writeMouseToFile(Mouse mouse, Admin admin) throws IOException {
         String mouseString = mouse.toString();
         String mouseAdded = mouseString + "|| was added by: " + "|UserName: " + admin.getUserName() + "|User Id:" + admin.getUserId() + "|User Role:" + admin.getRole();
-        FileWriter fileWriter3 = new FileWriter("src/Stock.txt", true);
-        FileWriter logWriter2 = new FileWriter("src/AdminModifications.txt", true);
+        FileWriter fileWriter3 = new FileWriter("C:/Users/Tudor/Desktop/Proiecte/Portofoliu/ITShop-JavaCore-/Stock.txt", true);
+        FileWriter logWriter2 = new FileWriter("C:/Users/Tudor/Desktop/Proiecte/Portofoliu/ITShop-JavaCore-/AdminModifications.txt", true);
         fileWriter3.write(mouseString);
         logWriter2.write(mouseAdded);
         fileWriter3.close();
@@ -102,7 +102,7 @@ public class ProductDao implements Dao<Product> {
 
     //This method writes the stock file with the new modifications that where made by the customer
     public void writeFileWithUpdatedStock(List<Product> products) throws IOException {
-        FileWriter fileWriter = new FileWriter(new File("src/Stock.txt"));
+        FileWriter fileWriter = new FileWriter(new File("C:/Users/Tudor/Desktop/Proiecte/Portofoliu/ITShop-JavaCore-/Stock.txt"));
         for (Product p : products) {
             fileWriter.write(p.toString());
         }
@@ -112,7 +112,7 @@ public class ProductDao implements Dao<Product> {
     //This method writes the BasketContent of the user and saves it to a text file
 
     public void writeBasketContentsToText(ShoppingBasket shoppingBasket, Customer customer) throws IOException {
-        FileWriter fileWriter = new FileWriter(new File("src/ActivityLog.txt"), true);
+        FileWriter fileWriter = new FileWriter(new File("C:/Users/Tudor/Desktop/Proiecte/Portofoliu/ITShop-JavaCore-/ActivityLog.txt"), true);
         fileWriter.write("***********LOG FILE**********\n");
 
         LocalDateTime date = LocalDateTime.now();
@@ -128,7 +128,7 @@ public class ProductDao implements Dao<Product> {
     }
 
     public void writeBasketContentsToTextAfterEmptyOption(ShoppingBasket shoppingBasket, Customer customer) throws IOException {
-        FileWriter fileWriter = new FileWriter(new File("src/ActivityLog.txt"), true);
+        FileWriter fileWriter = new FileWriter(new File("C:/Users/Tudor/Desktop/Proiecte/Portofoliu/ITShop-JavaCore-/ActivityLog.txt"), true);
         fileWriter.write("***********LOG FILE**********\n");
 
         LocalDateTime date = LocalDateTime.now();
@@ -146,7 +146,7 @@ public class ProductDao implements Dao<Product> {
 
     //THIS METHOD IS USED TO WRITE THE CONTENTS OF THE BASKET TO TEXT WITH STATUS PURCHASED
     public void writeBasketContentsToTextAfterPaying(Customer customer) throws IOException {
-        FileWriter fileWriter = new FileWriter(new File("src/ActivityLog.txt"), true);
+        FileWriter fileWriter = new FileWriter(new File("C:/Users/Tudor/Desktop/Proiecte/Portofoliu/ITShop-JavaCore-/ActivityLog.txt"), true);
         fileWriter.write("***********LOG FILE**********\n");
 
         LocalDateTime date = LocalDateTime.now();

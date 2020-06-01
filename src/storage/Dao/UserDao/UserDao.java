@@ -23,7 +23,7 @@ public class UserDao implements Dao<User> {
 
 
     public UserDao() throws IOException{
-        this.userList = getAll(new File("src/UserAccounts.txt"));
+        this.userList = getAll(new File("C:/Users/Tudor/Desktop/Proiecte/Portofoliu/ITShop-JavaCore-/UserAccounts.txt"));
     }
 
 

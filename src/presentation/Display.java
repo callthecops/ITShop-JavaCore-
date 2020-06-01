@@ -18,15 +18,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
-/**I should have splitted the display class in 3 sepparate classes GeneralDisplay, AdminDisplay and CustomerDisplay but
+/**
+ * I should have splitted the display class in 3 sepparate classes GeneralDisplay, AdminDisplay and CustomerDisplay but
  * i figured this out only after 70% of my program was already done.That way it would have been not so long.Not modifying it
  * would take to much time with no actual benefit for the application itself.
- *
+ * <p>
  * The class sole purpose is to function as a view for the application.A router is also called wich makes the class
  * completely decoupled from the dao and more or less decoupled from the service.
+ *
  * @author Tudor
  */
-
 
 
 //Is calling the service layer when it needs to access data from the storage.
@@ -67,9 +68,13 @@ public class Display {
             System.out.println(number + "." + u);
             number++;
         }
+        System.out.println(number + ".Exit program.");
 
         int input = retrieveUserInput();
-
+        //Exits the program.
+        if (input == 5) {
+            System.exit(0);
+        }
         //selecting the user based on the above user input
         User user = userService.searchUserById(input);
         User customerOrAdmin = userService.createByRole(user);
@@ -85,11 +90,11 @@ public class Display {
     public int retrieveUserInput() {
         int userChoice = 0;
         boolean test = true;
-        Scanner scanner = new Scanner(System.in);
         while (test) {
+            Scanner scanner = new Scanner(System.in);
             if (scanner.hasNextInt()) {
                 userChoice = Integer.parseInt(scanner.nextLine());
-                if (userChoice < 0 || userChoice > 4) {
+                if (userChoice <= 0 || userChoice > 5) {
                     System.out.println("Please enter the correct number ");
                 } else {
                     return userChoice;

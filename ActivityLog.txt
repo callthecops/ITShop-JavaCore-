@@ -36,3 +36,7 @@
 |User Id: 102|PostCode:  E20 3BS|Product Barcode: 666|Price: 999.0|Quantity: 1|Status: purchased|Date: 01-06-2020 01:46
 |User Id: 102|PostCode:  E20 3BS|Product Barcode: 235066|Price: 60.0|Quantity: 1|Status: purchased|Date: 01-06-2020 01:46
 ***********LOG FILE**********
+***********LOG FILE**********
+***********LOG FILE**********
+***********LOG FILE**********
+***********LOG FILE**********

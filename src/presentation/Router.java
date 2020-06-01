@@ -57,7 +57,7 @@ public class Router {
     //Third Redirect
     public void redirectToStockScreenAfterTheProductHasBeenAdded(ProductDao productDao) throws IOException {
 
-        productDao.setProductList(productDao.getAll((new File("src/Stock.txt"))));
+        productDao.setProductList(productDao.getAll((new File("C:/Users/Tudor/Desktop/Proiecte/Portofoliu/ITShop-JavaCore-/Stock.txt"))));
 
     }
 
