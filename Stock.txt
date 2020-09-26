@@ -13,4 +13,4 @@
 237788, keyboard, standard, Logitech, grey, wired, 14, 6.5, 8.99, UK
 112233, mouse, gaming, Logitech, black, wireless, 15, 7.5, 9.5, 3
 238800, keyboard, internet, Microsoft, black, wired, 3, 26.5, 30.0, US
-666, keyboard, gaming, Sapphire, Red, wired, 653, 666.0, 999.0, us
+666, keyboard, gaming, Sapphire, Red, wired, 648, 666.0, 999.0, us

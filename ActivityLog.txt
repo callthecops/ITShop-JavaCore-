@@ -40,3 +40,11 @@
 ***********LOG FILE**********
 ***********LOG FILE**********
 ***********LOG FILE**********
+***********LOG FILE**********
+|User Id: 102|PostCode:  E20 3BS|Product Barcode: 666|Price: 999.0|Quantity: 1|Status: purchased|Date: 04-08-2020 13:44
+***********LOG FILE**********
+|User Id: 102|PostCode:  E20 3BS|Product Barcode: 666|Price: 999.0|Quantity: 2|Status: purchased|Date: 04-08-2020 14:40
+***********LOG FILE**********
+***********LOG FILE**********
+|User Id: 102|PostCode:  E20 3BS|Product Barcode: 666|Price: 999.0|Quantity: 2|Status: purchased|Date: 04-08-2020 14:42
+***********LOG FILE**********

@@ -8,9 +8,7 @@ import storage.model.user.admin.Admin;
 import storage.model.user.customer.Customer;
 import storage.model.user.customer.ShoppingBasket;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -38,6 +36,7 @@ public class ProductDao implements Dao<Product> {
     public List<Product> getAll(File file) throws IOException {
         Scanner sc = new Scanner(file);
         List<Product> productList = new ArrayList<>();
+        
         while (sc.hasNext()) {
             String[] products = sc.nextLine().replace(" ",
                     "").split(",");
